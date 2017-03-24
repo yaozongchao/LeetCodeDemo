@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 public class Main {
 
-    public static Logger mLogger = Logger.getLogger("main");
+    public static String strClassName = Main.class.getName();
+    public static Logger mLogger = Logger.getLogger(strClassName);
 
     public static void main(String[] args) {
 	// write your code here
@@ -21,6 +22,6 @@ public class Main {
 //        int[] result = new int[a.length];
 //        sortSolution.mergeSort(a, 0, a.length-1, result);
         sortSolution.quickSort(a, 0, a.length-1);
-        mLogger.log(Level.INFO, "a=");
+        //        logger.info("" + result);
     }
 }

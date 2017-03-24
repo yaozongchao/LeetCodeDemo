@@ -83,4 +83,33 @@ public class StringSolution {
         }
         return new String(charArray);
     }
+
+    /// https://leetcode.com/problems/is-subsequence/?tab=Solutions
+    public boolean isSubsequence(String s, String t) {
+        if (s.length() <= 0) return true;
+        int indexT = 0;
+        int indexS = 0;
+        while (indexT < t.length()) {
+            if (t.charAt(indexT) == s.charAt(indexS)) {
+                indexS++;
+            }
+            if (indexS == s.length()) {
+                return true;
+            }
+
+            indexT++;
+        }
+        return false;
+
+    }
+
+    // https://leetcode.com/problems/excel-sheet-column-number/?tab=Description
+    public int titleToNumber(String s) {
+        // 数制转换，类比成十进制就好理解了
+        int result = 0;
+        for(int i = 0 ; i < s.length(); i++) {
+            result = result * 26 + (s.charAt(i) - 'A' + 1);
+        }
+        return result;
+    }
 }
