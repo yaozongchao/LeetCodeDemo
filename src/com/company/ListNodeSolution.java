@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.List;
+
 /**
  * Created by yzc on 17/3/23.
  */
@@ -21,20 +23,6 @@ public class ListNodeSolution {
         }
 
         return head.next;
-    }
-
-    // 206. Reverse Linked List
-    // https://leetcode.com/problems/reverse-linked-list/#/description
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) return head;
-        ListNode newHead = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = newHead;
-            newHead = head;
-            head = next;
-        }
-        return newHead;
     }
 
     public ListNode reverseBetween(ListNode head, int m, int n) {
@@ -131,6 +119,120 @@ public class ListNodeSolution {
             }
         }
         return mergeList(mergeKLists(left), mergeKLists(right));
+    }
+
+    // 求单链表中节点的个数
+    public int getNodeCount(ListNode head) {
+        ListNode current = head;
+        int count = 0;
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
+    // 将单链表翻转
+    // 206. Reverse Linked List
+    // https://leetcode.com/problems/reverse-linked-list/#/description
+    public ListNode reverseListNode(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode current = head;
+        ListNode newHead = null;
+        while (current != null) {
+            ListNode tmp = current;
+            current = current.next;
+            tmp.next = newHead;
+            newHead = tmp;
+        }
+        return newHead;
+    }
+
+    public ListNode getListNode(ListNode head, int k) {
+        if (head == null || k <= 0) return null;
+        ListNode firstCurrent = head;
+        ListNode secondCurrent = head;
+
+        while (firstCurrent != null && k > 0) {
+            firstCurrent = firstCurrent.next;
+            k--;
+        }
+        if (k > 0) {
+            return null;
+        }
+
+        while (firstCurrent != null) {
+            firstCurrent = firstCurrent.next;
+            secondCurrent = secondCurrent.next;
+        }
+        return secondCurrent;
+    }
+
+    public ListNode getMiddleListNode(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode aheadCurrent = head;
+        ListNode behindCurrent = head;
+        while (aheadCurrent != null && aheadCurrent.next != null) {
+            aheadCurrent = aheadCurrent.next.next;
+            behindCurrent = behindCurrent.next;
+        }
+        return behindCurrent;
+    }
+
+    public void printReverseListNode(ListNode head, List<Integer> resultArray) {
+        if (head == null) return; // 递归退出
+        printReverseListNode(head.next, resultArray);
+        resultArray.add(head.val);
+    }
+
+    public ListNode mergeSortedNode(ListNode head1, ListNode head2) {
+        if (head1 == null) return head2;
+        if (head2 == null) return head1;
+        ListNode newHead = null;
+
+        // 先安上第一个节点，确定返回值
+        if (head1.val < head2.val) {
+            newHead = head1;
+            newHead.next = null;
+            head1 = head1.next;
+        }
+        else {
+            newHead = head2;
+            newHead.next = null;
+            head2 = head2.next;
+        }
+
+        ListNode newCurrent = newHead;
+
+        while (head1 != null && head2 != null) {
+            if (head1.val < head2.val) {
+                newCurrent.next = head1;
+                newCurrent = newCurrent.next;
+                head1 = head1.next;
+                newCurrent.next = null;
+            }
+            else {
+                newCurrent.next = head2;
+                newCurrent = newCurrent.next;
+                head2 = head2.next;
+                newCurrent.next = null;
+            }
+        }
+
+        while (head1 != null) {
+            newCurrent.next = head1;
+            newCurrent = newCurrent.next;
+            head1 = head1.next;
+            newCurrent.next = null;
+        }
+
+        while (head2 != null) {
+            newCurrent.next = head2;
+            newCurrent = newCurrent.next;
+            head2 = head2.next;
+            newCurrent.next = null;
+        }
+        return newHead;
     }
 
 }
