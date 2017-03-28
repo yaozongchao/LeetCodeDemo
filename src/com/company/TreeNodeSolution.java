@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by yzc on 17/3/23.
@@ -130,5 +127,62 @@ public class TreeNodeSolution {
             addTreePath(root.right, path + root.val + "->", result);
         }
     }
+
+
+    // 求二叉树中的结点个数
+    public int getTreeNodeCount(TreeNode root) {
+        if (root == null) return 0;
+        return getTreeNodeCount(root.left) + getTreeNodeCount(root.right) + 1;
+    }
+
+    // 求二叉树的深度
+    // 104. Maximum Depth of Binary Tree
+    // https://leetcode.com/problems/maximum-depth-of-binary-tree/#/description
+    public int getTreeDepth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(getTreeDepth(root.left), getTreeDepth(root.right)) + 1;
+    }
+
+    // 前序遍历（记忆方法：对应后序遍历，前序是指：根结点 -> 左结点 -> 右节点，后序是指：左结点 -> 右节点 -> 根结点）
+    public void preOrderTraverse(TreeNode root, List<Integer> resultArray) {
+        if (root == null) return;
+        resultArray.add(root.val);
+        preOrderTraverse(root.left, resultArray);
+        preOrderTraverse(root.right, resultArray);
+    }
+
+    public void backOrderTraverse(TreeNode root, List<Integer> resultArray) {
+        if (root == null) return;
+        preOrderTraverse(root.left, resultArray);
+        preOrderTraverse(root.right, resultArray);
+        resultArray.add(root.val);
+    }
+
+    public void middleOrderTraverse(TreeNode root, List<Integer> resultArray) {
+        if (root == null) return;
+        preOrderTraverse(root.left, resultArray);
+        resultArray.add(root.val);
+        preOrderTraverse(root.right, resultArray);
+    }
+
+    // 分层遍历二叉树（按层次从上往下，从左往右）
+    public void levelOrderTraverse(TreeNode root, List<Integer> resultArray) {
+        if (root == null) return;
+        Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
+        queue.push(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.pop();
+            resultArray.add(node.val);
+            if (node.left != null) {
+                queue.push(node.left);
+            }
+            else if (node.right != null) {
+                queue.push(node.right);
+            }
+        }
+    }
+
+
+
 
 }
