@@ -42,7 +42,14 @@ public class Main {
 //        facadePattern();
 //        proxyPattern();
 //        builderPattern();
-        statePattern();
+//        statePattern();
+
+//        PalindromeSolution solution = new PalindromeSolution();
+//        boolean result = solution.isPalindrome("ab");
+
+        BinarySearchSolution solution = new BinarySearchSolution();
+        int result1 = solution.LastRemaining_Solution2(5, 3);
+        int result2 = solution.LastRemaining_Solution(5, 3);
     }
 
 
