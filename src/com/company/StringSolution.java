@@ -1,8 +1,10 @@
 package com.company;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by yzc on 17/3/23.
@@ -111,5 +113,69 @@ public class StringSolution {
             result = result * 26 + (s.charAt(i) - 'A' + 1);
         }
         return result;
+    }
+
+    // 字符串全排列，分析见剑指offer第155页
+    public void swap(char[] chars, int from, int to) {
+        if (chars.length <= 0) return;
+        char tmp = chars[from];
+        chars[from] = chars[to];
+        chars[to] = tmp;
+    }
+
+    public void swap(int[] nums, int from, int to) {
+        if (nums.length <= 0) return;
+        int tmp = nums[from];
+        nums[from] = nums[to];
+        nums[to] = tmp;
+    }
+
+    public void permutation(char[] chars, int start, List<String> resultList) {
+        if (start == chars.length - 1) {
+            String str = new String(chars);
+            resultList.add(str);
+        }
+        else {
+            for (int i = start; i < chars.length; i++) {
+                swap(chars, start, i);
+                permutation(chars, start+1, resultList);
+                swap(chars, i, start);
+            }
+        }
+    }
+
+    public void permutation(int[] nums, int start) {
+        if (start == nums.length - 1) {
+            boolean found = false;
+            for (int i = 0; i < nums.length; i++) {
+                for (int j = i+1; j < nums.length; j++) {
+                    if ((i-j == nums[i] - nums[j]) || (j-i == nums[i]-nums[j])) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                resultCount++;
+            }
+        }
+        else {
+            for (int i = start; i < nums.length; i++) {
+                swap(nums, start, i);
+                permutation(nums, start+1);
+                swap(nums, i, start);
+            }
+        }
+    }
+
+    // 用全排列思想解八皇后问题，分析见剑指offer第158页
+    public int resultCount = 0;
+    public int QueensQuestion(int k) {
+        int[] columns = new int[k];
+        for (int i = 0; i < k; i++) {
+            columns[i] = i;
+        }
+        permutation(columns, 0);
+        return resultCount;
     }
 }

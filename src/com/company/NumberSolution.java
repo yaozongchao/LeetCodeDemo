@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by yzc on 2017/3/24.
@@ -97,6 +98,31 @@ public class NumberSolution {
         return num == 1;
     }
 
+    // 找到按从小到大顺序的第1500个丑数，分析见剑指Offer第184页
+    public int getUglyNum(int index) {
+        if (index < 0) return 0;
+        int[] uglyNums = new int[index];
+        uglyNums[0] = 1;
+        int nextUglyIndex = 1;
+        int ugly2Index = 0;
+        int ugly3Index = 0;
+        int ugly5Index = 0;
+        while (nextUglyIndex < index) {
+            uglyNums[nextUglyIndex] = Math.min(Math.min(uglyNums[ugly2Index]*2, uglyNums[ugly3Index]*3), uglyNums[ugly5Index]*5);
+            while (uglyNums[ugly2Index]*2 <= uglyNums[nextUglyIndex]) {
+                ugly2Index++;
+            }
+            while (uglyNums[ugly3Index]*3 <= uglyNums[nextUglyIndex]) {
+                ugly3Index++;
+            }
+            while (uglyNums[ugly5Index]*5 <= uglyNums[nextUglyIndex]) {
+                ugly5Index++;
+            }
+            nextUglyIndex++;
+        }
+        return uglyNums[nextUglyIndex-1];
+    }
+
     ///https://leetcode.com/problems/count-primes/?tab=Description,
     // 0,1都不是质数，质数就是只能被1和自身整除的数
     public boolean isPrime(int num) {
@@ -156,5 +182,43 @@ public class NumberSolution {
             n = n/26;
         }
         return builder.toString();
+    }
+
+    // 得到N个整数中最小的K个数，分析见剑指Offer第167页
+    public void getLeastNumbers(int[] nums, TreeSet<Integer> leastNums, int k) {
+        leastNums.clear();
+        if (k < 1 || nums.length < k) return;
+        for (int i = 0; i < nums.length; i++) {
+            if (leastNums.size() < k) {
+                leastNums.add(nums[i]);
+            }
+            else {
+                Integer greatestNum = leastNums.last();
+                if (greatestNum > nums[i]) {
+                    leastNums.remove(greatestNum);
+                    leastNums.add(nums[i]);
+                }
+            }
+        }
+    }
+
+    // 连续子数组的最大和问题，分析见剑指offer第171页
+    public int findGreatestSumOfSubArray(int[] nums) {
+        if (nums.length < 1) return 0;
+        int max = Integer.MIN_VALUE;
+        int curSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (curSum <= 0) {
+                curSum = nums[i];
+            }
+            else {
+                curSum += nums[i];
+            }
+            if (max < curSum) {
+                max = curSum;
+            }
+        }
+
+        return max;
     }
 }

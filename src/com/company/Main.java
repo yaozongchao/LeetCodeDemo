@@ -16,6 +16,7 @@ import com.pattern.state.OrderInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 public class Main {
@@ -36,6 +37,9 @@ public class Main {
 //        sortSolution.quickSort(a, 0, a.length-1);
         //        logger.info("" + result);
 //        listNodeDemo();
+//        treeNodeDemo();
+//        stringDemo();
+        numberDemo();
 //        factoryPattern();
 //        decoratorPattern();
 //        adapterPattern();
@@ -47,11 +51,32 @@ public class Main {
 //        PalindromeSolution solution = new PalindromeSolution();
 //        boolean result = solution.isPalindrome("ab");
 
-        BinarySearchSolution solution = new BinarySearchSolution();
-        int result1 = solution.LastRemaining_Solution2(5, 3);
-        int result2 = solution.LastRemaining_Solution(5, 3);
+//        BinarySearchSolution solution = new BinarySearchSolution();
+//        int result1 = solution.LastRemaining_Solution2(5, 3);
+//        int result2 = solution.LastRemaining_Solution(5, 3);
+
+//        int a[] = {3, 4, 5, 1, 2};
+//        int a[] = {3, 4, 5, 1};
+//        int a[] = {1, 0, 1, 1, 1};
+//        int a[] = {1, 1, 1, 0, 1};
+
+//        int reuslt = solution.minNumberInRotatedArray(a);
     }
 
+    private static void numberDemo() {
+        // 得到N个整数中最小的K个数，分析见剑指Offer第167页
+        NumberSolution solution = new NumberSolution();
+//        int[] a = {4, 5, 1, 6, 2, 7, 3, 8};
+//        TreeSet<Integer> treeSet = new TreeSet<Integer>();
+//        solution.getLeastNumbers(a, treeSet, 4);
+
+        // 连续子数组的最大和问题，分析见剑指offer第171页
+//        int[] a = {1, -2, 3, 10, -4, 7, 2, -5};
+//        int result = solution.findGreatestSumOfSubArray(a);
+
+        // 找到按从小到大顺序的第1500个丑数，分析见剑指Offer第184页
+        int result = solution.getUglyNum(1500);
+    }
 
     private static void listNodeDemo() {
         ListNodeSolution solution = new ListNodeSolution();
@@ -60,8 +85,30 @@ public class Main {
 //        ListNode reversedHead = solution.reverseListNode(head);
 //        ListNode result = solution.getListNode(head, 4);
 //        ListNode result = solution.getMiddleListNode(head);
-        List<Integer> resultArray = new ArrayList<Integer>();
-        solution.printReverseListNode(head, resultArray);
+//        List<Integer> resultArray = new ArrayList<Integer>();
+//        solution.printReverseListNode(head, resultArray);
+
+
+        ListNode result = solution.deleteNode(head, head.next.next);
+    }
+
+    private static void treeNodeDemo() {
+        TreeNodeSolution solution = new TreeNodeSolution();
+        int a[] = {10, 5, 12, 4, 7};
+        TreeNode root = solution.createTreeNode(a);
+        List<List<Integer>> resultList = new ArrayList<List<Integer>>();
+        solution.findPath(root, 22, resultList);
+    }
+
+    private static void stringDemo() {
+        StringSolution solution = new StringSolution();
+        // 字符串全排列
+//        String str = "abcd";
+//        List<String> resultList = new ArrayList<String>();
+//        solution.permutation(str.toCharArray(), 0, resultList);
+
+        // 八皇后问题
+        int reuslt = solution.QueensQuestion(8);
     }
 
     private static void factoryPattern() {

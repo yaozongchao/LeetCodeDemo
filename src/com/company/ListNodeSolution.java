@@ -148,6 +148,7 @@ public class ListNodeSolution {
         return newHead;
     }
 
+    // 取单链表的倒数第K个节点
     public ListNode getListNode(ListNode head, int k) {
         if (head == null || k <= 0) return null;
         ListNode firstCurrent = head;
@@ -168,6 +169,7 @@ public class ListNodeSolution {
         return secondCurrent;
     }
 
+    // 取链表的中间结点
     public ListNode getMiddleListNode(ListNode head) {
         if (head == null || head.next == null) return head;
         ListNode aheadCurrent = head;
@@ -179,12 +181,41 @@ public class ListNodeSolution {
         return behindCurrent;
     }
 
+    // 判断单链表是否有环
+    public boolean hasCircle(ListNode head) {
+        if (head == null || head.next == null) return false;
+        ListNode fastCurNode = head;
+        ListNode slowCurNode = head;
+        while (fastCurNode != null && fastCurNode.next != null) {
+            fastCurNode = fastCurNode.next.next;
+            slowCurNode = slowCurNode.next;
+            if (fastCurNode == slowCurNode) return true;
+        }
+        return false;
+    }
+
     public void printReverseListNode(ListNode head, List<Integer> resultArray) {
         if (head == null) return; // 递归退出
         printReverseListNode(head.next, resultArray);
         resultArray.add(head.val);
     }
 
+    public ListNode mergeSortedNode2(ListNode head1, ListNode head2) {
+        if (head1 == null) return head2;
+        if (head2 == null) return head1;
+        ListNode newHeadNode = null;
+        if (head1.val < head2.val) {
+            newHeadNode = head1;
+            newHeadNode.next = mergeSortedNode2(head1.next, head2);
+        }
+        else {
+            newHeadNode = head2;
+            newHeadNode.next = mergeSortedNode2(head1, head2.next);
+        }
+        return newHeadNode;
+    }
+
+    // 合并有序链表，循环的方式
     public ListNode mergeSortedNode(ListNode head1, ListNode head2) {
         if (head1 == null) return head2;
         if (head2 == null) return head1;
@@ -233,6 +264,60 @@ public class ListNodeSolution {
             newCurrent.next = null;
         }
         return newHead;
+    }
+
+    //在O(1)的时间复杂度内，删除链表结点
+    ListNode deleteNode(ListNode head, ListNode node) {
+        if (head == null || node == null) return null;
+        if (head == node) {
+            head = null;
+            node = null;
+            return null;
+        }
+        ListNode curNode = head;
+        // 如果要删除的结点是尾结点
+        if (node.next == null) {
+            while (curNode != null) {
+                if (curNode.next.val == node.val) {
+                    curNode.next = null;
+                }
+                curNode = curNode.next;
+            }
+        }
+        else {
+            ListNode nextNode = node.next;
+            node.val = nextNode.val;
+            node.next = nextNode.next;
+            nextNode = null;
+        }
+        return head;
+    }
+
+    // 翻转链表，分析见剑指offer第112页
+    public ListNode reverseNodes(ListNode head) {
+        ListNode newHeadNode = null;
+        ListNode curNode = head;
+        ListNode preNode = null;
+        while (curNode != null) {
+            ListNode nextNode = curNode.next;
+            if (nextNode == null) {
+                newHeadNode = curNode;
+            }
+            curNode.next = preNode;
+            preNode = curNode;
+            curNode = nextNode;
+        }
+        return newHeadNode;
+    }
+
+    // 递归实现单链表反转，http://www.cnblogs.com/kubixuesheng/p/4394509.html可参考其对递归的分析
+    public ListNode reverseNodes2(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode nextNode = head.next;
+        head.next = null;
+        ListNode reverseRest = reverseNodes2(nextNode);
+        nextNode.next = head;
+        return reverseRest;
     }
 
 }

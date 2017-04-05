@@ -165,7 +165,9 @@ public class TreeNodeSolution {
         preOrderTraverse(root.right, resultArray);
     }
 
-    // 分层遍历二叉树（按层次从上往下，从左往右）
+    // 分层遍历二叉树（按层次从上往下，从左往右）分析见剑指offer第138页
+    // 广度优先遍历的思路是先将起始节点放入队列，队列不空，接下来每一次从队列的头部取出一个结点，遍历这个结点后把从它能到达的结点都依次放入队列。
+    // 重复这个遍历过程，直到队列中的结点全部被遍历为止
     public void levelOrderTraverse(TreeNode root, List<Integer> resultArray) {
         if (root == null) return;
         Deque<TreeNode> queue = new ArrayDeque<TreeNode>();
@@ -180,6 +182,35 @@ public class TreeNodeSolution {
                 queue.push(node.right);
             }
         }
+    }
+
+    // 二叉树中和为某一值的路径
+    public void findPath(TreeNode root, int num, List<List<Integer>> resultList) {
+        if (root == null) return;
+        List<Integer> pathList = new ArrayList<Integer>();
+        int currentSum = 0;
+        p_findPath(root, num, pathList, currentSum, resultList);
+    }
+
+    private void p_findPath(TreeNode root, int num, List<Integer> pathList, int currentSum, List<List<Integer>> resultList) {
+        currentSum = currentSum + root.val;
+        pathList.add(root.val);
+        boolean isLeaf = root.left == null && root.right == null;
+        if (currentSum == num && isLeaf) {
+            List<Integer> list = new ArrayList<Integer>(pathList);
+            resultList.add(list);
+        }
+
+        if (root.left != null) {
+            p_findPath(root.left, num, pathList, currentSum, resultList);
+        }
+
+        if (root.right != null) {
+            p_findPath(root.right, num, pathList, currentSum, resultList);
+        }
+
+        currentSum = currentSum - root.val;
+        pathList.remove(pathList.size()-1);
     }
 
 

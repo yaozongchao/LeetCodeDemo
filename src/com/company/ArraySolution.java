@@ -129,4 +129,23 @@ public class ArraySolution {
 
         return false;
     }
+
+    // 调整数组顺序使奇数位于偶数前面
+    void reorderOddEvent(int[] array) {
+        int start = 0;
+        int end = array.length - 1;
+        while (start < end) {
+            while (start < end && array[start]%2 == 1) {
+                start++;
+            }
+            while (start < end && array[end]%2 == 0) {
+                end--;
+            }
+            if (start < end) {
+                int tmp = array[start];
+                array[start] = array[end];
+                array[end] = tmp;
+            }
+        }
+    }
 }
